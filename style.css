@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+#marque-h1{
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    background-color: #FFFFFF;
+}
+
+#Contact-color{
+    color: #555555;
+}
+
+
+#Contact-bg-col{
+    background-color: #7CB9E8;
+}
+
+#contact-last i{
+    font-size: 30px;
+}
+
+#con-bg{
+    background-color: #edf0f2;
+}
+
+
+#a-gst a{
+    text-decoration: none;
+}
+
+#learning-bg{
+    background-color: #7CB9E8;
+    color: white;
+    font-size: larger;
+}
+
+#footer-bg{
+    background-color: #555555;
+    color: white;
+}
+
+#footer-bg a{
+    text-decoration: none;
+    color: white;
+}
+
+#marquee-bg{
+    background-color: #D4F1F4;
+}
+
+#nav-cart {
+    position: relative;
+}
+
+#nav-cart::after {
+    content: attr(data-cart-count);
+    /* Set content to the value of the data-count attribute */
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: red;
+    border: 2px solid white;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
