@@ -10,7 +10,13 @@ function generateProductCardHTML(course) {
                           <div class="flex-grow-1 align-self-center overflow-hidden">
                               <div>
                                   <h5 class="text-truncate font-size-18"><a href="#" class="text-dark">${course.title}</a></h5>
-                                  
+                                  <p class="text-muted mb-0">
+                                      <i class="bx bxs-star text-warning"></i>
+                                      <i class="bx bxs-star text-warning"></i>
+                                      <i class="bx bxs-star text-warning"></i>
+                                      <i class="bx bxs-star text-warning"></i>
+                                      <i class="bx bxs-star-half text-warning"></i>
+                                  </p>
                               </div>
                           </div>
                           <div class="flex-shrink-0 ms-2">
@@ -61,10 +67,52 @@ function renderCartList(courseList) {
             <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping 
           </a>
         </div> <!-- end col -->
-        
+        <div class="col-sm-6">
+          
         </div> <!-- end col -->
       </div>
     `;
+    function validateForm() {
+      var inputs = document.getElementsByTagName("input");
+      var selects = document.getElementsByTagName("select");
+      var slots = document.getElementsByName("slots");
+      var checked = false;
+
+      for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].value === "") {
+          alert("Please fill in all fields");
+          return false;
+        }
+      }
+
+      for (var i = 0; i < selects.length; i++) {
+        if (selects[i].value === "") {
+          alert("Please select an option for all dropdowns");
+          return false;
+        }
+      }
+
+      for (var i = 0; i < slots.length; i++) {
+        if (slots[i].checked) {
+          checked = true;
+          break;
+        }
+      }
+
+      return true;
+    }
+
+    function submitForm() {
+        if (validateForm()) {
+            // If form is valid, submit the form
+            document.querySelector('.order-form').submit();
+        } else {
+            // If form is not valid, do nothing
+            return false;
+        }
+    }
+  
+
     // Form fileds are required
     document.getElementById("myForm").addEventListener("submit", function(event) {
       // Get all form fields
@@ -242,7 +290,7 @@ examDateInput.addEventListener("change", (event) => {
   <div>
   <label for="course-amount">Professional certification course fees:</label>
   <input type="text" id="course-amount" placeholder="Enter professional certification course fees">
-  <button onclick="calculateTotal()"  class="btn btn-primary">Lock the price</button>
+  <button onclick="calculateTotal(event) "  class="btn btn-primary">Lock the price</button>
   <br/><br/>
   <imp><b>*This offer has locked your price for a 30-minute window. If not finalized within this period, the deal could be withdrawn due to limited number of exam slots available.</b></imp>
 </div>
@@ -277,13 +325,21 @@ examDateInput.addEventListener("change", (event) => {
       </div>
   </div>
 </div>
-
+<button
+        type="button"
+        class="submit-btn"
+       
+        onclick="submitForm() "
+        style="text-transform: none; text-decoration: none; color: white"
+      >
+        Submit
+      </button>
 
       
     `;
 
 
-    function calculateTotal() {
+    function calculateTotal(event) {
       // Get the amount entered by the user
       const courseAmount = parseFloat(document.getElementById("course-amount").value);
       document.getElementById("course").textContent = courseAmount;
@@ -292,7 +348,7 @@ examDateInput.addEventListener("change", (event) => {
   
       // Update the total amount displayed in the order summary
       document.getElementById("total").textContent = totalAmount;
-      
+      event.preventDefault();
   }
   window.calculateTotal = calculateTotal;
 //Function to update course amount
@@ -349,54 +405,15 @@ function updateCourseAmount() {
   } else {
       // Display message for unavailable slots
       slotsContainer.innerHTML = "<p>Time slots not available for this date.</p>";
+       // Disable the submit button
+    document.getElementById("submitBtn").disabled = true;
+      
       if (timeSlots) {
           timeSlots.style.display = "none";
       }
   }
 });
 
-document.getElementById("myForm").addEventListener("submit", function(event) {
-  // Prevent the default form submission behavior
-  event.preventDefault();
-
-  // Get form input values
-  var username = document.getElementById("username").value.trim();
-  var email = document.getElementById("email").value.trim();
-
-  // Clear previous error messages
-  document.getElementById("errorMessages").innerHTML = "";
-
-  // Validate username
-  if (username === "") {
-      displayError("Username is required.");
-      return;
-  }
-
-  // Validate email
-  if (email === "") {
-      displayError("Email is required.");
-      return;
-  }
-  if (!isValidEmail(email)) {
-      displayError("Invalid email format.");
-      return;
-  }
-
-  // If all validation passes, submit the form
-  this.submit();
-});
-
-function displayError(message) {
-  var errorDiv = document.createElement("div");
-  errorDiv.textContent = message;
-  document.getElementById("errorMessages").appendChild(errorDiv);
-}
-
-function isValidEmail(email) {
-  // Simple email validation regex
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
 
 main();
 window.updateslotvalue = updateslotvalue;
